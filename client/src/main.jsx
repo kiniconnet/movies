@@ -4,6 +4,8 @@ import './index.css'
 import App from './App.jsx'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
+export const BASE_URL = import.meta.env.MODE === "development" ? "http://localhost:8000/api" : "/api"
+
 // Creating a QueryClient instance
 const queryClient = new QueryClient();
 

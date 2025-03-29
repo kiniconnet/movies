@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
+import { BASE_URL } from '../main';
 
 const SignUp = () => {
   // State variables for form inputs
@@ -15,7 +16,7 @@ const SignUp = () => {
   // Define the mutation function for signing up
   const { mutate: signUp, isLoading } = useMutation({
     mutationFn: async (payload) => {
-      const response = await fetch('http://localhost:8000/signup', {
+      const response = await fetch(`${BASE_URL}/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

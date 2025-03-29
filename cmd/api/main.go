@@ -6,13 +6,16 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
+	"github.com/joho/godotenv"
+	"github.com/kiniconnet/react-go-tutorial/internal/config"
 	"github.com/kiniconnet/react-go-tutorial/internal/repository"
-	"github.com/kiniconnet/react-go-tutorial/internal/repository/db_repo"
+	dbrepo "github.com/kiniconnet/react-go-tutorial/internal/repository/db_repo"
 )
 
-const port = 8000
+
 
 type application struct {
 	Domain       string
@@ -23,11 +26,14 @@ type application struct {
 	JWTIssuer    string
 	JWTAudience  string
 	CookieDomain string
+	Config       config.Config
 }
 
 func main() {
 	// set application configuration
 	var app application
+
+
 
 	// read from the command line
 	flag.StringVar(&app.DSN, "dsn", "mongodb+srv://kiniconnet:kiniconnet2025@cluster0.at1fb.mongodb.net/golang_db?retryWrites=true&w=majority&appName=Cluster0", "MongoDB connection string")
@@ -36,6 +42,7 @@ func main() {
 	flag.StringVar(&app.JWTAudience, "jwt-audience", "example.com", "audience for JWT")
 	flag.StringVar(&app.CookieDomain, "cookie-domain", "localhost", "domain for cookie")
 	flag.StringVar(&app.Domain, "domain", "example.com", "domain for the application")
+	flag.BoolVar(&app.Config.InProduction, "production", true, "To determine production or development environment")
 	flag.Parse()
 
 	// Connect to the database
@@ -51,21 +58,32 @@ func main() {
 	// close the database connection
 	defer app.DB.Connection().Disconnect(context.Background())
 
+
+	// Loading the dot env
+	if app.Config.InProduction{
+		err := godotenv.Load(".env");
+		if err != nil{
+			log.Fatal("Error loading the .env file")
+		}
+	}
+
+	port := os.Getenv("PORT")
+
 	app.auth = Auth{
 		Issuer:        app.JWTIssuer,
 		Audience:      app.JWTAudience,
 		Secret:        app.JWTScret,
 		TokenExpiry:   15 * time.Minute,
 		RefreshExpiry: 24 * time.Hour,
-		CookiePath: "/",
-		CookieDomain: app.CookieDomain,
-		CookieName: "__HOST-refresh_token",
+		CookiePath:    "/",
+		CookieDomain:  app.CookieDomain,
+		CookieName:    "__HOST-refresh_token",
 	}
 
 	log.Println("Starting application on port", port)
 
 	// start the server
-	err = http.ListenAndServe(fmt.Sprintf(":%d", port), app.routes())
+	err = http.ListenAndServe(fmt.Sprintf(":%s", port), app.routes())
 	if err != nil {
 		log.Println("Error starting server:", err)
 	}

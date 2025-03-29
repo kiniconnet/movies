@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { Link, useNavigate, useOutletContext } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
+import { BASE_URL } from '../main';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -14,7 +15,7 @@ const Login = () => {
   // Define the mutation function for login
   const { mutate: login, isLoading } = useMutation({
     mutationFn: async (payload) => {
-      const response = await fetch('http://localhost:8000/authenticate', {
+      const response = await fetch(`${BASE_URL}/authenticate`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
