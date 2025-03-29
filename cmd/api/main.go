@@ -42,7 +42,7 @@ func main() {
 	flag.StringVar(&app.JWTAudience, "jwt-audience", "example.com", "audience for JWT")
 	flag.StringVar(&app.CookieDomain, "cookie-domain", "localhost", "domain for cookie")
 	flag.StringVar(&app.Domain, "domain", "example.com", "domain for the application")
-	flag.BoolVar(&app.Config.InProduction, "production", true, "To determine production or development environment")
+	flag.BoolVar(&app.Config.InProduction, "production", false, "To determine production or development environment")
 	flag.Parse()
 
 	// Connect to the database
