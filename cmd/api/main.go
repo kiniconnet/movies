@@ -61,12 +61,11 @@ func main() {
 
 
 	// Loading the dot env
-	if os.Getenv("ENV")== "production"{
-		err := godotenv.Load(".env");
+		err = godotenv.Load(".env");
 		if err != nil{
 			log.Fatal("Error loading the .env file")
 		}
-	}
+
 
 	port := os.Getenv("PORT")
 
