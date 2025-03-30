@@ -61,7 +61,7 @@ func main() {
 
 
 	// Loading the dot env
-	if app.Config.InProduction{
+	if os.Getenv("ENV")== "production"{
 		err := godotenv.Load(".env");
 		if err != nil{
 			log.Fatal("Error loading the .env file")
