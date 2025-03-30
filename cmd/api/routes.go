@@ -24,7 +24,7 @@ func (app *application) routes() http.Handler {
 	mux.Post("/api/authenticate", app.Authenticate)
 	mux.Post("/api/signup", app.Signup)
 
-	if app.Config.InProduction {
+	if app.Config.LoadStatic {
 		fs := http.FileServer(http.Dir("./client/dist"))
 		 http.Handle("/static", http.StripPrefix("/static/", fs))
 	}
