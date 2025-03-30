@@ -16,7 +16,7 @@ func (app *application) routes() http.Handler {
 	if app.Config.InProduction { 
 		mux.Use(app.enableCORS)
 		 fs := http.FileServer(http.Dir("./client/dist"))
-		 http.Handle("/client/dist", http.StripPrefix("client/dist", fs))
+		 http.Handle("/static", http.StripPrefix("/static/", fs))
 	}
 
 
