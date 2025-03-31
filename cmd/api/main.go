@@ -9,13 +9,10 @@ import (
 	"os"
 	"time"
 
-	"github.com/joho/godotenv"
 	"github.com/kiniconnet/react-go-tutorial/internal/config"
 	"github.com/kiniconnet/react-go-tutorial/internal/repository"
 	dbrepo "github.com/kiniconnet/react-go-tutorial/internal/repository/db_repo"
 )
-
-
 
 type application struct {
 	Domain       string
@@ -32,8 +29,6 @@ type application struct {
 func main() {
 	// set application configuration
 	var app application
-
-
 
 	// read from the command line
 	flag.StringVar(&app.DSN, "dsn", "mongodb+srv://kiniconnet:kiniconnet2025@cluster0.at1fb.mongodb.net/golang_db?retryWrites=true&w=majority&appName=Cluster0", "MongoDB connection string")
@@ -56,14 +51,6 @@ func main() {
 
 	// close the database connection
 	defer app.DB.Connection().Disconnect(context.Background())
-
-
-	// Loading the dot env
-		err = godotenv.Load(".env");
-		if err != nil{
-			log.Fatal("Error loading the .env file")
-		}
-
 
 	port := os.Getenv("PORT")
 
