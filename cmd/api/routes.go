@@ -33,8 +33,8 @@ func (app *application) routes() http.Handler {
 	mux.Post("/api/signup", app.Signup)
 
 	if os.Getenv("ENV") == "production"{
-		fs := http.FileServer(http.Dir("./client/dist"))
-		mux.Handle("/static/*", http.StripPrefix("/static", fs))
+		fs := http.FileServer(http.Dir("./static/dist"))
+		http.Handle("/", http.StripPrefix("/", fs))
 	}
 
 	return mux
