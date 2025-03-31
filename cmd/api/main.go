@@ -37,6 +37,7 @@ func main() {
 	flag.StringVar(&app.JWTAudience, "jwt-audience", "example.com", "audience for JWT")
 	flag.StringVar(&app.CookieDomain, "cookie-domain", "localhost", "domain for cookie")
 	flag.StringVar(&app.Domain, "domain", "example.com", "domain for the application")
+	flag.BoolVar(&app.Config.LoadStatic, "loadStatic", true, "This is use to load Static file to the server")
 	flag.Parse()
 
 	// Connect to the database
