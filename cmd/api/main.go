@@ -39,8 +39,9 @@ func main() {
 	// set application configuration
 	var app application
 
+
 	// read from the command line
-	flag.StringVar(&app.DSN, "dsn", "", "MongoDB connection string")
+	flag.StringVar(&app.DSN, "dsn", os.Getenv("MONGODB_URI"), "MongoDB connection string")
 	flag.StringVar(&app.JWTScret, "jwt-secret", "verysecret", "signing secret for JWT")
 	flag.StringVar(&app.JWTIssuer, "jwt-issuer", "example.com", "issuer for JWT")
 	flag.StringVar(&app.JWTAudience, "jwt-audience", "example.com", "audience for JWT")
@@ -68,7 +69,7 @@ func main() {
 	if port == "" {
 		port = "9000"
 	}
-	
+
 	app.auth = Auth{
 		Issuer:        app.JWTIssuer,
 		Audience:      app.JWTAudience,

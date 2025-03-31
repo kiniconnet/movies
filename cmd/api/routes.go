@@ -23,10 +23,10 @@ func (app *application) routes() http.Handler {
 
 	mux.Use(middleware.Recoverer)
 
-	if os.Getenv("ENV") != "production" {
+	/* if os.Getenv("ENV") != "production" {
 		mux.Use(app.enableCORS)
 	}
-
+ */
 	mux.Get("/", app.Home)
 	mux.Get("/api/movies", app.AllMovies)
 	mux.Post("/api/authenticate", app.Authenticate)
@@ -36,6 +36,6 @@ func (app *application) routes() http.Handler {
 		fs := http.FileServer(http.Dir("./client/dist"))
 		mux.Handle("/static/*", http.StripPrefix("/static", fs))
 	}
-	
+
 	return mux
 }
