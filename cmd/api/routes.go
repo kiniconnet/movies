@@ -18,7 +18,7 @@ func (app *application) routes() http.Handler {
 			log.Fatal(err)
 		}
 	}
-	
+
 	// define routes
 	mux := chi.NewRouter()
 
@@ -35,7 +35,7 @@ func (app *application) routes() http.Handler {
 
 	if os.Getenv("ENV") == "production" {
 		fs := http.FileServer(http.Dir("./static/dist/"))
-		mux.Handle("/static/", http.StripPrefix("/static", fs))
+		mux.Handle("/static/dist/*", http.StripPrefix("/static", fs))
 	}
 
 	return mux
