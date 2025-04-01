@@ -18,6 +18,7 @@ func (app *application) routes() http.Handler {
 			log.Fatal(err)
 		}
 	}
+	
 	// define routes
 	mux := chi.NewRouter()
 
