@@ -12,7 +12,7 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/kiniconnet/react-go-tutorial/internal/config"
 	"github.com/kiniconnet/react-go-tutorial/internal/repository"
-	dbrepo "github.com/kiniconnet/react-go-tutorial/internal/repository/db_repo"
+	"github.com/kiniconnet/react-go-tutorial/internal/repository/db_repo"
 )
 
 type application struct {
@@ -39,7 +39,6 @@ func main() {
 	// set application configuration
 	var app application
 
-
 	// read from the command line
 	flag.StringVar(&app.DSN, "dsn", os.Getenv("MONGODB_URI"), "MongoDB connection string")
 	flag.StringVar(&app.JWTScret, "jwt-secret", "verysecret", "signing secret for JWT")
@@ -63,7 +62,6 @@ func main() {
 
 	// close the database connection
 	defer app.DB.Connection().Disconnect(context.Background())
-
 
 	port := os.Getenv("PORT")
 	if port == "" {
